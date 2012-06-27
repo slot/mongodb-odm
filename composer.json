@@ -1,5 +1,5 @@
 {
-    "name": "doctrine/mongodb-odm",
+    "name": "slot-doctrine/mongodb-odm",
     "type": "library",
     "description": "Doctrine MongoDB Object Document Mapper",
     "keywords": ["persistence", "mongodb"],
