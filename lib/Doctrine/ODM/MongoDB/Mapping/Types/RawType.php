@@ -20,53 +20,34 @@
 namespace Doctrine\ODM\MongoDB\Mapping\Types;
 
 /**
- * The Json type.
+ * Raw data type.
  *
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.org
  * @since       1.0
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
- * @author      Sven Loth <sven.loth@me.com>
+ * @author      Bulat Shakirzyanov <mallluhuct@gmail.com>
  */
-class JsonType  extends Type
+class RawType extends Type
 {
-    const JSON = 'json';
-
-    /**
-     * @param mixed $value
-     * @return string
-     */
     public function convertToDatabaseValue($value)
     {
-        return json_encode($value);
+        return $value;
     }
 
-    /**
-     * @param string $value
-     * @return mixed
-     */
     public function convertToPHPValue($value)
     {
-        return json_decode($value, true);
+        return $value;
     }
-
 
     public function closureToMongo()
     {
-        return '$return = (string) $value;';
+        return '$return = $value;';
     }
 
     public function closureToPHP()
     {
-        return '$return = (string) $value;';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return self::JSON;
+        return '$return = $value;';
     }
 }

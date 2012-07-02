@@ -126,7 +126,7 @@ class PersistenceBuilder
                 } elseif (isset($mapping['association']) && $mapping['association'] === ClassMetadata::REFERENCE_MANY) {
                     $value = array();
                     foreach ($new as $reference) {
-                        $value[] = $this->prepareReferenceDocValue($mapping, $reference);
+                        $value[] = $this->prepareReferencedDocumentValue($mapping, $reference);
                     }
 
                 // @EmbedMany
@@ -346,6 +346,11 @@ class PersistenceBuilder
         $class = $this->dm->getClassMetadata($className);
         $embeddedDocumentValue = array();
         foreach ($class->fieldMappings as $mapping) {
+            // Skip not saved fields
+            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
+                continue;
+            }
+
             $rawValue = $class->reflFields[$mapping['fieldName']]->getValue($embeddedDocument);
 
             // Generate a document identifier
